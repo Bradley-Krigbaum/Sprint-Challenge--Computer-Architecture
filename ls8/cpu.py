@@ -125,7 +125,6 @@ class CPU:
 
     def ALU(self, op, reg_a, reg_b):
         """ALU operations."""
-       
         if op == 'ADD':
             self.reg[reg_a] += self.reg[reg_b]
             print('ALU OPERATION: ADD... COMPLETE')
@@ -164,7 +163,6 @@ class CPU:
         Handy function to print out the CPU state. You might want to call this
         from run() if you need help debugging.
         """
-
         print(f"TRACE: %02X | %02X %02X %02X |" % (
             self.pc,
             #self.fl,
