@@ -17,6 +17,10 @@ class CPU:
         self.branchtable[0b10000010] = self.LDI
         self.branchtable[0b01000111] = self.PRN
         self.branchtable[0b10100010] = self.MUL
+        self.branchtable[0b10100000] = self.ADD
+        self.branchtable[0b10100001] = self.SUB
+        self.branchtable[0b10100011] = self.DIV
+        self.branchtable[0b10100100] = self.MOD
         self.branchtable[0b01000101] = self.PUSH
         self.branchtable[0b01000110] = self.POP
         self.branchtable[0b01010100] = self.JMP
@@ -46,6 +50,30 @@ class CPU:
         reg_a = self.ram_read(self.pc + 1)
         reg_b = self.ram_read(self.pc + 2)
         self.ALU('MUL', reg_a, reg_b)
+        self.pc += 3
+
+    def ADD(self):
+        reg_a = self.ram_read(self.pc + 1)
+        reg_b = self.ram_read(self.pc + 2)
+        self.ALU('ADD', reg_a, reg_b)
+        self.pc += 3
+
+    def SUB(self):
+        reg_a = self.ram_read(self.pc + 1)
+        reg_b = self.ram_read(self.pc + 2)
+        self.ALU('SUB', reg_a, reg_b)
+        self.pc += 3
+
+    def DIV(self):
+         reg_a = self.ram_read(self.pc + 1)
+         reg_b = self.ram_read(self.pc + 2)
+         self.ALU('DIV', reg_a, reg_b)
+         self.pc += 3
+
+    def MOD(self):
+        reg_a = self.ram_read(self.pc + 1)
+        reg_b = self.ram_read(self.pc + 2)
+        self.ALU('MOD', reg_a, reg_b)
         self.pc += 3
 
     def PUSH(self):
@@ -137,6 +165,9 @@ class CPU:
         elif op == 'DIV':
             self.reg[reg_a] //= self.reg[reg_b]
             print('ALU OPERATION: DIV... COMPLETE')
+        elif op == 'MOD':
+            self.reg[reg_a] %= self.reg[reg_b]
+            print('ALU OPERATION: MOD... COMPLETE')
         elif op == 'CMP':
             print('ALU OPERATION: CMP... COMPLETE')
             if self.reg[reg_a] == self.reg[reg_b]:
